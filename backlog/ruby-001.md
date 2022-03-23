@@ -1,11 +1,11 @@
-# RUBY-002: Refactor English Auction
+# RUBY-001: Refactor the English auction in the Ruby codebase
 
-As the sole owner of the auction codebase,
-In order to make it easier for others to work on,
-I want to refactor it to be easier to maintain and change
+As a maintainer of the auction codebase,
+In order to improve the development experience for others,
+I want to refactor it to be easier to maintain, read, and change
 
 Acceptance Criteria:
-* Maintain current functionality
+* Maintains current functionality
 * Code quality is improved
 * Readability is improved
 * Test coverage and quality is improved

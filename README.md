@@ -1,16 +1,14 @@
 # Auction House Interview
 
-## What is this?
-
-This repo hosts our auction house interview. Please fork it to a public location and create a pull request to implement your changes for the stories.
+This repo hosts our auction house interview. Please fork it to a public location and create pull requests to implement your changes for each story.
 
 ## Stories
-* [TS-001: Implement a sealed-bid auction in TypeScript](backlog/ts-001.md)
-* [RUBY-001: Refactor English Auction](backlog/ruby-001.md)
+* [TS-001: Implement a sealed-bid auction in the TypeScript codebase](backlog/ts-001.md)
+* [RUBY-001: Refactor the English auction in the Ruby codebase](backlog/ruby-001.md)
 
 ### Usage
 
-#### Ruby
+#### Ruby Auction
 
 ```
 cd ruby
@@ -19,7 +17,7 @@ rspec
 ./auction
 ```
 
-#### Typescript
+#### Typescript Auction
 
 ```
 cd typescript

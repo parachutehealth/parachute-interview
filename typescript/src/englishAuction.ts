@@ -3,10 +3,15 @@ export interface IO {
   out: (prompt: string) => Promise<void>
 }
 
+interface UserBid {
+  user: string
+  bid: number
+}
+
 export class EnglishAuction {
   private io: IO
   private users: string[] = []
-  private bids: number[] = []
+  private bids: UserBid[] = []
 
   constructor(io: IO) {
     this.io = io
@@ -19,43 +24,28 @@ export class EnglishAuction {
     while (true) {
       await this.io.out("Enter the name of the next user, or blank to end")
       user = await this.io.read()
-      if ( !user || user === "" ) {
+      if (!user || user === "") {
         break;
       }
       this.users.push(user)
     }
 
-    let highBid = 0;
-    let winner = 'Nobody'
-    await this.io.out('Current high bid is: 0 - Nobody')
+    for (let currentUser of this.users) {
+      await this.io.out(`${currentUser}, enter a bid:`)
 
-    while (true) {
-      const currentUser = this.users[0]
-      await this.io.out(`${currentUser}, enter a bid (0 to pass):`)
-      this.users.push(this.users.shift() || '')
       const bid = parseInt(await this.io.read())
-      this.bids.push(bid)
-      if ( this.auctionOver() ) {
-        break
-      }
-      if ( bid > highBid ) {
-        highBid = bid
-        winner = currentUser
-      }
-
-      await this.io.out(`Current high bid is: ${highBid} - ${winner}`)
+      this.bids.push({ bid, user: currentUser })
     }
 
-    await this.io.out(`Winner is ${winner} with a bid of ${highBid}`)
+    const winner = this.get_winner()
+
+    await this.io.out(`Winner is ${winner}`)
   }
 
-  private auctionOver() {
-    if ( this.bids.length < this.users.length ) {
-      return false;
-    }
-    const lastRound = this.bids.slice(-this.users.length)
-    const sum = lastRound.reduce((total, nextBid) => total + nextBid, 0)
-    return sum === 0
+  get_winner() {
+    const sortedBids =  this.bids.sort((a, b) => b.bid - a.bid)
+    const winnerBid = sortedBids[0]
+    return winnerBid.user
   }
 
 }

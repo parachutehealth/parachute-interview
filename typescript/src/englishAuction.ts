@@ -17,7 +17,6 @@ export class EnglishAuction {
     let user = await this.io.read()
     this.users.push(user)
     while (true) {
-      await this.io.out(user)
       await this.io.out("Enter the name of the next user, or blank to end")
       user = await this.io.read()
       if ( !user || user === "" ) {

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
-require_relative './lib/input_output'
-require_relative './lib/english_auction'
-io = InputOutput.new
-auction = EnglishAuction.new(io)
-auction.start_auction
+require_relative './services/auction/base_service'
+require_relative './services/auction/english'
+require_relative './services/auction/users'
+require_relative './services/auction/highest_bid'
+Auction::English.new.call

@@ -39,11 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var englishAuction_1 = require("./englishAuction");
 var readline_1 = __importDefault(require("readline"));
-var sealedAuction_1 = require("./sealedAuction");
 var reader = readline_1.default.createInterface({
     input: process.stdin,
-    output: process.stdout
+    output: process.stdout,
 });
 var IO = {
     out: function (prompt) { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
@@ -55,8 +55,15 @@ var IO = {
                     return reader.question('', function (answer) { return resolve(answer); });
                 })];
         });
+    }); },
+    terminal: function () { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (resolve) {
+                    return reader.close();
+                })];
+        });
     }); }
 };
-var auction = new sealedAuction_1.SealedAuction(IO);
+var auction = new englishAuction_1.EnglishAuction(IO);
 auction.start_auction();
 //# sourceMappingURL=index.js.map

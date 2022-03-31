@@ -37,36 +37,48 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnglishAuction = void 0;
+var FIRST_USER_NAME = "Enter the name of the first user, or blank to end";
+var NEXT_USER_NAME = "Enter the name of the next user, or blank to end";
+var NOBODY_BIDS = "Current high bid is: 0 - Nobody";
+var CURRENT_WINNER = 'Nobody';
+var ZERO_TO_PASS = 'enter a bid (0 to pass):';
+var CURRENT_HIGH_BID = 'Current high bid is:';
+var WINNER_IS = 'Winner is';
+var WITH_BID = 'with a sealed-bid of';
+var HIGH_SEALED_BID = "Current high sealed-bid is: 0 - Nobody";
+var ZERO_PASS_SEALED = "enter a sealed-bid (0 to pass):";
+var CURRENT_SEALED_BID = "Current high sealed-bid is:";
 var EnglishAuction = /** @class */ (function () {
     function EnglishAuction(io) {
         this.users = [];
         this.bids = [];
+        this.sealedBids = [];
         this.io = io;
     }
     EnglishAuction.prototype.start_auction = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var user, highBid, winner, currentUser, bid, _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.io.out("Enter the name of the first user, or blank to end")];
+            var user, highBid, sealedHighBid, winner, currentUser, userBid, bid, currentUser, userBid, bid;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.io.out("" + FIRST_USER_NAME)];
                     case 1:
-                        _b.sent();
+                        _a.sent();
                         return [4 /*yield*/, this.io.read()];
                     case 2:
-                        user = _b.sent();
+                        user = _a.sent();
                         this.users.push(user);
-                        _b.label = 3;
+                        _a.label = 3;
                     case 3:
                         if (!true) return [3 /*break*/, 7];
                         return [4 /*yield*/, this.io.out(user)];
                     case 4:
-                        _b.sent();
-                        return [4 /*yield*/, this.io.out("Enter the name of the next user, or blank to end")];
+                        _a.sent();
+                        return [4 /*yield*/, this.io.out("" + NEXT_USER_NAME)];
                     case 5:
-                        _b.sent();
+                        _a.sent();
                         return [4 /*yield*/, this.io.read()];
                     case 6:
-                        user = _b.sent();
+                        user = _a.sent();
                         if (!user || user === "") {
                             return [3 /*break*/, 7];
                         }
@@ -74,47 +86,77 @@ var EnglishAuction = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 7:
                         highBid = 0;
-                        winner = 'Nobody';
-                        return [4 /*yield*/, this.io.out('Current high bid is: 0 - Nobody')];
+                        sealedHighBid = 0;
+                        winner = "" + CURRENT_WINNER;
+                        return [4 /*yield*/, this.io.out("" + NOBODY_BIDS)];
                     case 8:
-                        _b.sent();
-                        _b.label = 9;
+                        _a.sent();
+                        _a.label = 9;
                     case 9:
                         if (!true) return [3 /*break*/, 13];
                         currentUser = this.users[0];
-                        return [4 /*yield*/, this.io.out(currentUser + ", enter a bid (0 to pass):")];
+                        return [4 /*yield*/, this.io.out(currentUser + ", " + ZERO_TO_PASS)];
                     case 10:
-                        _b.sent();
+                        _a.sent();
                         this.users.push(this.users.shift() || '');
-                        _a = parseInt;
                         return [4 /*yield*/, this.io.read()];
                     case 11:
-                        bid = _a.apply(void 0, [_b.sent()]);
-                        this.bids.push(bid);
-                        if (this.auctionOver()) {
+                        userBid = _a.sent();
+                        if (!userBid || userBid === "") {
+                            this.users.push(this.users.shift() || '');
                             return [3 /*break*/, 13];
                         }
+                        bid = parseInt(userBid);
+                        this.bids.push(bid);
                         if (bid > highBid) {
                             highBid = bid;
                             winner = currentUser;
                         }
-                        return [4 /*yield*/, this.io.out("Current high bid is: " + highBid + " - " + winner)];
+                        return [4 /*yield*/, this.io.out(CURRENT_HIGH_BID + " " + highBid + " - " + winner)];
                     case 12:
-                        _b.sent();
+                        _a.sent();
                         return [3 /*break*/, 9];
-                    case 13: return [4 /*yield*/, this.io.out("Winner is " + winner + " with a bid of " + highBid)];
+                    case 13: return [4 /*yield*/, this.io.out("" + HIGH_SEALED_BID)];
                     case 14:
-                        _b.sent();
+                        _a.sent();
+                        _a.label = 15;
+                    case 15:
+                        if (!true) return [3 /*break*/, 19];
+                        currentUser = this.users[0];
+                        return [4 /*yield*/, this.io.out(currentUser + ", " + ZERO_PASS_SEALED)];
+                    case 16:
+                        _a.sent();
+                        this.users.push(this.users.shift() || '');
+                        return [4 /*yield*/, this.io.read()];
+                    case 17:
+                        userBid = _a.sent();
+                        if (this.auctionOver()) {
+                            this.io.terminal();
+                            return [3 /*break*/, 19];
+                        }
+                        bid = parseInt(userBid);
+                        this.sealedBids.push(bid);
+                        if (bid > sealedHighBid) {
+                            sealedHighBid = bid;
+                            winner = currentUser;
+                        }
+                        return [4 /*yield*/, this.io.out(CURRENT_SEALED_BID + " " + sealedHighBid + " - " + winner)];
+                    case 18:
+                        _a.sent();
+                        return [3 /*break*/, 15];
+                    case 19: return [4 /*yield*/, this.io.out(WINNER_IS + " " + winner + " " + WITH_BID + " " + sealedHighBid)];
+                    case 20:
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
         });
     };
     EnglishAuction.prototype.auctionOver = function () {
-        if (this.bids.length < this.users.length) {
+        if (this.sealedBids.length <= this.users.length) {
             return false;
         }
-        var lastRound = this.bids.slice(-this.users.length);
+        var lastRound = this.sealedBids.slice(-this.users.length);
         var sum = lastRound.reduce(function (total, nextBid) { return total + nextBid; }, 0);
         return sum === 0;
     };

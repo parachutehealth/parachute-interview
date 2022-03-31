@@ -39,8 +39,8 @@ RSpec.describe EnglishAuction do
       end
     end
 
-    context "asking for bids" do
-      it "prompts the users for their bids" do
+    context 'asking for bids' do
+      it 'prompts the users for their bids' do
         io = double(InputOutput)
         allow(io).to receive(:read).and_return('Zell', 'Brian', '', '3', '0', '0')
         allow(io).to receive(:out)
@@ -51,10 +51,10 @@ RSpec.describe EnglishAuction do
         main.start_auction
       end
 
-      context "when all contestants pass" do
-        it "ends the auction and prints the winner" do
+      context 'when all contestants pass' do
+        it 'ends the auction and prints the winner' do
           io = double(InputOutput)
-          allow(io).to receive(:read).and_return('Zell', 'Brian', '','3', '4', '0', '0')
+          allow(io).to receive(:read).and_return('Zell', 'Brian', '', '3', '4', '0', '0')
           allow(io).to receive(:out)
           expect(io).to receive(:out).with('Winner is Brian with a bid of 4')
 
@@ -67,7 +67,7 @@ RSpec.describe EnglishAuction do
         context 'when it is a pass' do
           it 'does not record the bid' do
             io = double(InputOutput)
-            allow(io).to receive(:read).and_return('Zell', 'Brian', '',  '0', '0')
+            allow(io).to receive(:read).and_return('Zell', 'Brian', '', '0', '0')
             allow(io).to receive(:out)
             expect(io).to receive(:out).with('Current high bid is: 0 - Nobody').twice
 
@@ -77,18 +77,18 @@ RSpec.describe EnglishAuction do
         end
 
         context 'when that bid is higher than the current high' do
-            it 'displays that as the new high bid' do
-              io = double(InputOutput)
-              allow(io).to receive(:read).and_return('Zell', 'Brian', '', '3', '4', '0', '0')
-              allow(io).to receive(:out)
-              expect(io).to receive(:out).with('Current high bid is: 3 - Zell')
-              expect(io).to receive(:out).with('Current high bid is: 4 - Brian')
-              main = EnglishAuction.new(io)
-              main.start_auction
-            end
+          it 'displays that as the new high bid' do
+            io = double(InputOutput)
+            allow(io).to receive(:read).and_return('Zell', 'Brian', '', '3', '4', '0', '0')
+            allow(io).to receive(:out)
+            expect(io).to receive(:out).with('Current high bid is: 3 - Zell')
+            expect(io).to receive(:out).with('Current high bid is: 4 - Brian')
+            main = EnglishAuction.new(io)
+            main.start_auction
           end
-        context "when it is lower than the current high" do
-          it "does not record the bid" do
+        end
+        context 'when it is lower than the current high' do
+          it 'does not record the bid' do
             io = double(InputOutput)
             allow(io).to receive(:read).and_return('Zell', 'Brian', '', '3', '2', '0', '0')
             allow(io).to receive(:out)

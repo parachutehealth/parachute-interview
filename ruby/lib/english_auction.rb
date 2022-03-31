@@ -1,5 +1,15 @@
 # frozen_string_literal: true
 class EnglishAuction
+  # Here we are defining constants string
+  FIRST_USER_NAME  = 'Enter the name of the first user, or blank to end'
+  NEXT_USER_NAME   = 'Enter the name of the next user, or blank to end'
+  NOBODY_BIDS      = 'Current high bid is: 0 - Nobody'
+  CURRENT_WINNER   = 'Nobody'
+  ZERO_TO_PASS     = 'enter a bid (0 to pass):'
+  CURRENT_HIGH_BID = 'Current high bid is:'
+  WINNER_IS        = 'Winner is'
+  WITH_BID         = 'with a bid of'
+
   def initialize(io)
     @io = io
     @users = []
@@ -7,23 +17,25 @@ class EnglishAuction
   end
 
   def start_auction
-    @io.out 'Enter the name of the first user, or blank to end'
+    @io.out FIRST_USER_NAME
+    
+    # Get User's Name Input 
+    get_users_list
 
-    loop do
-      user = @io.read.strip
-      break if user.empty?
-
-      @users.push user
-      @io.out @users.last
-      @io.out 'Enter the name of the next user, or blank to end'
-    end
-
-    @io.out 'Current high bid is: 0 - Nobody'
+    @io.out NOBODY_BIDS
     current_high = 0
-    current_winner = 'Nobody'
+    current_winner = CURRENT_WINNER
+
+    # Get User's Bids Input
+    current_winner, current_high = get_bids_list(current_winner, current_high)
+
+    @io.out "#{WINNER_IS} #{current_winner} #{WITH_BID} #{current_high}"
+  end
+
+  def get_bids_list current_winner, current_high
     loop do
       current_user = @users.first
-      @io.out "#{current_user}, enter a bid (0 to pass):"
+      @io.out "#{current_user}, #{ZERO_TO_PASS}"
       @users.push @users.shift
 
       current_bid = @io.read.to_i
@@ -33,10 +45,20 @@ class EnglishAuction
         current_high = current_bid
         current_winner = current_user
       end
-      @io.out "Current high bid is: #{current_high} - #{current_winner}"
+      @io.out "#{CURRENT_HIGH_BID} #{current_high} - #{current_winner}"
     end
+    return current_winner, current_high
+  end
 
-    @io.out "Winner is #{current_winner} with a bid of #{current_high}"
+  def get_users_list
+    loop do
+      user = @io.read.strip
+      break if user.empty?
+
+      @users.push user
+      @io.out @users.last
+      @io.out NEXT_USER_NAME
+    end
   end
 
   private

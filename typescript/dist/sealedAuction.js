@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function () { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function () { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -36,14 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SealedAuction = void 0;
-var SealedAuction = /** @class */ (function () {
-    function SealedAuction(io) {
+exports.EnglishAuction = void 0;
+var EnglishAuction = /** @class */ (function () {
+    function EnglishAuction(io) {
         this.users = [];
         this.bids = [];
         this.io = io;
     }
-    SealedAuction.prototype.start_auction = function () {
+    EnglishAuction.prototype.start_auction = function () {
         return __awaiter(this, void 0, void 0, function () {
             var user, highBid, winner, currentUser, bid, _a;
             return __generator(this, function (_b) {
@@ -75,36 +75,50 @@ var SealedAuction = /** @class */ (function () {
                     case 7:
                         highBid = 0;
                         winner = 'Nobody';
-                        _b.label = 8;
+                        return [4 /*yield*/, this.io.out('')];
                     case 8:
-                        if (!true) return [3 /*break*/, 11];
-                        if (this.users.length === 0) {
-                            return [3 /*break*/, 11];
-                        }
+                        _b.sent();
+                        _b.label = 9;
+                    case 9:
+                        if (!true) return [3 /*break*/, 13];
                         currentUser = this.users[0];
                         return [4 /*yield*/, this.io.out(currentUser + ", enter a bid (0 to pass):")];
-                    case 9:
+                    case 10:
                         _b.sent();
-                        this.users.shift();
+                        this.users.push(this.users.shift() || '');
                         _a = parseInt;
                         return [4 /*yield*/, this.io.read()];
-                    case 10:
+                    case 11:
                         bid = _a.apply(void 0, [_b.sent()]);
                         this.bids.push(bid);
+                        if (this.auctionOver()) {
+                            return [3 /*break*/, 13];
+                        }
                         if (bid > highBid) {
                             highBid = bid;
                             winner = currentUser;
                         }
-                        return [3 /*break*/, 8];
-                    case 11: return [4 /*yield*/, this.io.out("Winner is " + winner + " with a bid of " + highBid)];
+                        return [4 /*yield*/, this.io.out("Current highest bidder is " + winner)];
                     case 12:
+                        _b.sent();
+                        return [3 /*break*/, 9];
+                    case 13: return [4 /*yield*/, this.io.out("Winner is " + winner)];
+                    case 14:
                         _b.sent();
                         return [2 /*return*/];
                 }
             });
         });
     };
-    return SealedAuction;
+    EnglishAuction.prototype.auctionOver = function () {
+        if (this.bids.length < this.users.length) {
+            return false;
+        }
+        var lastRound = this.bids.slice(-this.users.length);
+        var sum = lastRound.reduce(function (total, nextBid) { return total + nextBid; }, 0);
+        return sum === 0;
+    };
+    return EnglishAuction;
 }());
-exports.SealedAuction = SealedAuction;
-//# sourceMappingURL=sealedAuction.js.map
+exports.EnglishAuction = EnglishAuction;
+//# sourceMappingURL=englishAuction.js.map

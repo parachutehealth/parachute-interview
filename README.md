@@ -25,4 +25,6 @@ yarn global add pnpm
 pnpm install
 yarn test
 ./auction.sh
+## FOR SELAED AUCTION
+./sealed_auction.sh
 ```

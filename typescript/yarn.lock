@@ -2089,10 +2089,10 @@ pkg-dir@^4.2.0:
   dependencies:
     find-up "^4.0.0"
 
-pnpm@^5.16.0:
-  version "5.16.0"
-  resolved "https://registry.yarnpkg.com/pnpm/-/pnpm-5.16.0.tgz#0a353b015c3f9afd93657aff649adb5e385274de"
-  integrity sha512-f7bNVvYGK24eiZ5gYX4wKOSohg6kIybEhrprHqUtFsP3TfttGSLqid1OTzLvVzwVp58QBj9ifOVwRQ+RiSmE0A==
+pnpm@^6.15.1:
+  version "6.15.1"
+  resolved "https://registry.yarnpkg.com/pnpm/-/pnpm-6.15.1.tgz#2f5983e05ee85c36d1166f6f81dcad1c996f7d10"
+  integrity sha512-hYGK8xlLdMj/sFhOLJ+x8IotsOkBp01c2mdWdLeKlUdA6EOl/RNWRp+7dUWs3Si2E1zgdTiHsEgNGYffv0PyLQ==
 
 prelude-ls@~1.1.2:
   version "1.1.2"

@@ -8,4 +8,4 @@ Acceptance Criteria:
 * Maintains current functionality
 * Code quality is improved
 * Readability is improved
-* Test coverage and quality is improved
+* Test coverage and quality are improved
